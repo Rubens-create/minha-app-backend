@@ -153,10 +153,10 @@ app.post('/remove-duplicates', async (req, res) => {
 
 /**
  * ROTA DE LIMPEZA 2: POST /remove-below-value
- * Remove transações com valor abaixo de 8000.
+ * Remove transações com valor abaixo de 10000.
  */
 app.post('/remove-below-value', async (req, res) => {
-    const THRESHOLD = 8000; // Define o valor de corte
+    const THRESHOLD = 10000; // Define o valor de corte
 
     try {
         // O comando para deletar é muito simples com Supabase:
@@ -172,7 +172,7 @@ app.post('/remove-below-value', async (req, res) => {
 
         // O 'count' retorna o número de linhas que foram afetadas (deletadas)
         res.status(200).json({ 
-            message: `${count || 0} transações abaixo de R$ 8.000,00 foram removidas.` 
+            message: `${count || 0} transações abaixo de R$ 10.000,00 foram removidas.` 
         });
 
     } catch (error) {
