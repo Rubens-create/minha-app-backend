@@ -1,0 +1,10 @@
+# Dependências do Node.js
+node_modules
+
+# Arquivo de variáveis de ambiente
+.env
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
