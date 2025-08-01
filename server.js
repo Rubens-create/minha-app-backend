@@ -151,6 +151,37 @@ app.post('/remove-duplicates', async (req, res) => {
 });
 
 
+/**
+ * ROTA DE LIMPEZA 2: POST /remove-below-value
+ * Remove transações com valor abaixo de 8000.
+ */
+app.post('/remove-below-value', async (req, res) => {
+    const THRESHOLD = 8000; // Define o valor de corte
+
+    try {
+        // O comando para deletar é muito simples com Supabase:
+        // delete() - Indica uma operação de deleção
+        // from('transactions') - Na tabela de transações
+        // lt('valor_transacao', THRESHOLD) - Onde (lt = less than) o valor for menor que o nosso limite
+        const { error, count } = await supabase
+            .from('transactions')
+            .delete()
+            .lt('valor_transacao', THRESHOLD);
+
+        if (error) throw error;
+
+        // O 'count' retorna o número de linhas que foram afetadas (deletadas)
+        res.status(200).json({ 
+            message: `${count || 0} transações abaixo de R$ 8.000,00 foram removidas.` 
+        });
+
+    } catch (error) {
+        console.error('Erro ao remover transações abaixo do valor:', error.message);
+        res.status(500).json({ error: 'Erro interno do servidor ao remover transações.' });
+    }
+});
+
+
 // --- INICIALIZAÇÃO DO SERVIDOR ---
 
 // Define a porta. Usa a variável de ambiente do Coolify ou 3009 como padrão.
